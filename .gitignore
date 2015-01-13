@@ -25,6 +25,9 @@
 #Ignoring MacDS_Store files
 .DS_Store
 
+#Ignoring .vagrant folder
+/.vagrant
+
 #Ignoring symfony files
 /app/SymfonyRequirements.php
 /app/check.php
