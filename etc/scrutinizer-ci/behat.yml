@@ -1,0 +1,29 @@
+default:
+    formatters:
+        pretty:
+            verbose:  true
+            paths:    false
+            snippets: false
+
+    suites:
+        web:
+            contexts:
+                - FeatureContext
+
+    extensions:
+        Behat\MinkExtension:
+            base_url: http://www.test.ci/app_test.php/
+            sessions:
+                default:
+                    goutte:
+                        guzzle_parameters:
+                            config:
+                                curl:
+                                    CURLOPT_SSL_VERIFYPEER: 0
+                                    CURLOPT_SSL_VERIFYHOST: 0
+                javascript:
+                    selenium2: ~
+            browser_name: firefox
+            show_auto:    false
+            files_path: /home/scrutinizer/build/
+        Behat\Symfony2Extension: ~

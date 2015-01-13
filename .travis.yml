@@ -1,0 +1,58 @@
+language: php
+addons:
+  hosts:
+  - www.test.ci
+  apt:
+    packages:
+      - apache2
+      - xvfb  
+php:
+  - 5.5
+  - 5.6
+before_script:
+  - sudo apt-get update
+  - sudo apt-get install apache2 libapache2-mod-fastcgi
+   # enable php-fpm
+  - sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
+  - sudo a2enmod rewrite actions fastcgi alias
+  - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
+   # configure apache virtual hosts
+  - sudo cp -f etc/travis-ci/www.test.ci /etc/apache2/sites-available/default
+  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/default
+  - sudo mkdir /etc/ssl/crt/
+  - sudo cp etc/provisioning/roles/nginx/files/ssl/server.crt /etc/ssl/crt/server.crt
+  - sudo cp etc/provisioning/roles/nginx/files/ssl/server.key /etc/ssl/crt/server.key
+#  - sudo a2enmod ssl
+  - sudo service apache2 restart
+
+  - sh -e /etc/init.d/xvfb start
+  - export DISPLAY=:99.0
+  - sleep 4
+
+  - curl -L http://selenium-release.storage.googleapis.com/2.46/selenium-server-standalone-2.46.0.jar > selenium.jar
+  - java -jar selenium.jar > selenium.log 2>&1 &
+  - sleep 4
+
+  - cp etc/travis-ci/app/config/parameters.yml app/config/parameters.yml
+  - cp etc/travis-ci/web/app_test.php web/app_test.php
+  - cp etc/travis-ci/web/.htaccess web/.htaccess
+  - cp etc/travis-ci/behat.yml behat.yml
+  - composer install
+  - php app/console assetic:dump --env=prod --no-debug
+  - cp etc/travis-ci/app/config/parameters.yml app/config/parameters.yml
+  - php app/console doctrine:database:create --env=test
+  - php app/console doctrine:migrations:migrate --env=test --no-interaction
+
+script:
+  - sed -i 's/^;//' ~/.phpenv/versions/$(phpenv global)/etc/conf.d/xdebug.ini
+  - ./bin/phpunit
+  - sed -i 's/^/;/' ~/.phpenv/versions/$(phpenv global)/etc/conf.d/xdebug.ini
+  - ./bin/behat
+  - ./bin/phpspec run
+  - ./bin/phpmd src/ text phpmd.xml
+  - ./bin/phpmd app/ text phpmd.xml
+  - ./bin/phpcs --standard=phpcs.xml src/ -n
+  - ./bin/phpcs --standard=phpcs.xml app/ -n
+  - ./bin/php-cs-fixer fix src/ --dry-run --diff --level=symfony --fixers=short_array_syntax,align_double_arrow,align_equals,no_blank_lines_before_namespace,ordered_use,phpdoc_order,-unused_use,-empty_return
+#  - ./bin/coveralls

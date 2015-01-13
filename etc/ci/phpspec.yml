@@ -1,0 +1,24 @@
+formatter.name: progress
+extensions:
+    - PhpSpec\Extension\CodeCoverageExtension
+code_coverage:
+  format:
+    - html
+    - clover
+    - php
+  output:
+    html: build/phpspec/coverage
+    clover: build/phpspec/clover.xml
+    php: build/phpspec/coverage.cov
+  blacklist:
+    - src/*/Controller
+    - src/*/DataFixtures
+    - src/*/Tests
+    - src/*/*Bundle/Controller
+    - src/*/*Bundle/DataFixtures
+    - src/*/*Bundle/DependencyInjection
+    - src/*/*Bundle/Form
+    - src/*/*Bundle/Tests
+  blacklist_files:
+    - src/*/*Bundle.php
+    - src/*/*Bundle/*Bundle.php

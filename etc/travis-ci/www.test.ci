@@ -1,0 +1,27 @@
+<VirtualHost *:80>
+  #LoadModule php5_module /home/ubuntu/.phpenv/versions/PHP_VERSION/libexec/libphp5.so
+  
+  DocumentRoot %TRAVIS_BUILD_DIR%/web
+  ServerName www.test.ci
+
+  <Directory "%TRAVIS_BUILD_DIR%/web">
+    Options FollowSymLinks MultiViews ExecCGI
+    AllowOverride All
+    Order deny,allow
+    Allow from all
+  </Directory>
+
+  # Wire up Apache to use Travis CI's php-fpm.
+  <IfModule mod_fastcgi.c>
+    AddHandler php5-fcgi .php
+    Action php5-fcgi /php5-fcgi
+    Alias /php5-fcgi /usr/lib/cgi-bin/php5-fcgi
+    FastCgiExternalServer /usr/lib/cgi-bin/php5-fcgi -host 127.0.0.1:9000 -pass-header Authorization
+  </IfModule>
+
+  ErrorLog /var/log/apache2/PROJECT_NAME-error.log
+  LogLevel warn
+
+  CustomLog /var/log/apache2/PROJECT_NAME-access.log combined
+  ServerSignature On
+</VirtualHost>

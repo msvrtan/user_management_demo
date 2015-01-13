@@ -1,0 +1,52 @@
+machine:
+  php:
+    version: 5.6.5
+  hosts:
+    www.test.ci: 127.0.0.1
+general:
+  artifacts:
+    - "build/"
+    - "tmp/"
+dependencies:
+  pre:
+    - sudo mkdir /etc/ssl/crt/
+    - sudo cp etc/provisioning/roles/nginx/files/ssl/server.crt /etc/ssl/crt/server.crt
+    - sudo cp etc/provisioning/roles/nginx/files/ssl/server.key /etc/ssl/crt/server.key
+    - sed -i 's/PROJECT_NAME/'"$CIRCLE_PROJECT_REPONAME"'/' etc/ci/www.test.ci
+    - sudo cp etc/ci/www.test.ci /etc/apache2/sites-available
+    - sudo a2ensite www.test.ci
+    - sudo a2enmod ssl
+    - sudo service apache2 restart
+    - cp etc/ci/app/config/parameters.yml app/config/parameters.yml
+    - cp etc/ci/web/app_test.php web/app_test.php
+    - cp etc/ci/web/.htaccess web/.htaccess
+    - cp etc/ci/behat.yml behat.yml
+    - cp etc/ci/phpspec.yml phpspec.yml
+  post:
+    - sudo setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx  app/cache app/logs
+    - sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
+    - php app/console doctrine:database:create --env=test
+    #- php app/console doctrine:schema:update --env=test --force
+    - php app/console doctrine:migrations:migrate --env=test --no-interaction
+    - php app/console doctrine:fixtures:load --env=test --no-interaction
+    - php app/console assetic:dump --env=prod --no-debug    
+    - wget http://selenium-release.storage.googleapis.com/2.46/selenium-server-standalone-2.46.0.jar
+    - java -jar selenium-server-standalone-2.46.0.jar:
+        background: true
+  cache_directories:
+    - "vendor"
+    - "bin"
+test:
+  override:
+    - sed -i 's/^;//' ~/.phpenv/versions/$(phpenv global)/etc/conf.d/xdebug.ini
+    - ./bin/phpunit
+    - ./bin/phpspec run
+    - sed -i 's/^/;/' ~/.phpenv/versions/$(phpenv global)/etc/conf.d/xdebug.ini
+    - ./bin/behat --strict
+    - ./bin/phpmd src/ text phpmd.xml
+    - ./bin/phpmd app/ text phpmd.xml
+    - ./bin/phpcs --standard=phpcs.xml src/ -n
+    - ./bin/phpcs --standard=phpcs.xml app/ -n
+    - ./bin/php-cs-fixer fix src/ --dry-run --diff --level=symfony --fixers=short_array_syntax,align_double_arrow,align_equals,no_blank_lines_before_namespace,ordered_use,phpdoc_order,-unused_use,-empty_return
+    - ./bin/coveralls
+    - ./bin/test-reporter
