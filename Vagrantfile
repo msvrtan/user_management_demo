@@ -20,4 +20,17 @@ Vagrant.configure("2") do |config|
     v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
     v.gui = false
   end
+
+  config.vm.provision :ansible do |ansible|
+    ansible.playbook = "etc/provisioning/setup.yml"
+    ansible.groups = {
+      "vagrant" => ["default"],
+      "servers:children" => ["vagrant"]
+    }
+    ansible.extra_vars = {
+      "private_ip" => "127.0.0.1"
+    }    
+    ansible.verbose = true
+    ansible.limit = 'all'
+  end
 end
