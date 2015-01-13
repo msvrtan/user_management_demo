@@ -6,6 +6,19 @@
 !app/logs/.gitkeep
 /app/phpunit.xml
 /bin/
+/build/
 /composer.phar
+/tmp
 /vendor/
 /web/bundles/
+
+#PHPStorm folder
+/.idea
+#backup files from unix editors
+*~
+#merge files
+*.orig
+#Ignoring shell scripts in root folder
+/*.sh
+#Ignoring MacDS_Store files
+.DS_Store
