@@ -5,6 +5,7 @@
 <exclude-pattern>*/cache/prod/*</exclude-pattern>
 <exclude-pattern>*/cache/dev/*</exclude-pattern>
 <exclude-pattern>*/cache/test/*</exclude-pattern>
+<exclude-pattern>*/DoctrineMigrations/*</exclude-pattern>
 <exclude-pattern>*SymfonyRequirements.php</exclude-pattern>
 <exclude-pattern>*check.php</exclude-pattern>
 <exclude-pattern>*.js</exclude-pattern>
