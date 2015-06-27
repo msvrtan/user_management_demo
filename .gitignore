@@ -10,6 +10,8 @@
 /composer.phar
 /tmp
 /vendor/
+/web/app_dev.php
+/web/app_test.php
 /web/bundles/
 
 #PHPStorm folder
