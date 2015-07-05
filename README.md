@@ -14,4 +14,31 @@ Syfmony2 starter kit is Symfony2 project, built using symfony installer to speed
 
 Based on Symfony framework v2.7.1
 
+#### Additional packages (ones not installed by symfony standard edition)
+
+##### Packages
+
+- doctrine/migrations 1.0.*@dev
+- doctrine/doctrine-migrations-bundle 2.1.*@dev
+
+##### Dev packages
+- phpunit/phpunit 4.7.6
+- mockery/mockery 0.9.4
+- doctrine/doctrine-fixtures-bundle v2.2.0
+- behat/behat v3.0.15
+- behat/symfony2-extension v2.0.0
+- behat/mink-extension v2.0.1
+- behat/mink-browserkit-driver v1.2.0
+- behat/mink-selenium2-driver v1.2.0
+- behat/mink-goutte-driver v1.1.0
+- behat/mink v1.6.1
+- fzaninotto/faker v1.5.0
+- phpspec/phpspec 2.2.1
+- phpmd/phpmd 2.2.3
+- squizlabs/php_codesniffer 2.3.3
+- satooshi/php-coveralls v0.6.1
+- fabpot/php-cs-fixer v1.9
+- codeclimate/php-test-reporter dev-master
+
+
 A Symfony project created on June 26, 2015, 9:00 pm.
