@@ -22,3 +22,8 @@
 /*.sh
 #Ignoring MacDS_Store files
 .DS_Store
+
+#Ignoring symfony files
+/app/SymfonyRequirements.php
+/app/check.php
+/web/config.php
