@@ -16,4 +16,5 @@
     - git
     - xz-utils
     - python-software-properties
+    - ant
   sudo: yes
