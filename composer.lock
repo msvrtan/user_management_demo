@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b2ad5a32d97993d9144922233d64af04",
-    "content-hash": "dceaf0dde9389fdb76fa603c9388ed58",
+    "hash": "4120eb5cd8eff12add3b454bcaaf99c3",
+    "content-hash": "b3967e4d676844d1108c01059464a2fd",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -3037,6 +3037,64 @@
             "time": "2015-06-15 20:19:33"
         },
         {
+            "name": "liuggio/fastest",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/liuggio/fastest.git",
+                "reference": "2c592ac0c1e739791b9c129761915e2ab6c07875"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/liuggio/fastest/zipball/2c592ac0c1e739791b9c129761915e2ab6c07875",
+                "reference": "2c592ac0c1e739791b9c129761915e2ab6c07875",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/collections": "~1.2",
+                "symfony/console": "~2.2",
+                "symfony/process": "~2.2",
+                "symfony/stopwatch": "~2.2"
+            },
+            "require-dev": {
+                "behat/behat": "~2.5",
+                "phpunit/phpunit": "~4"
+            },
+            "suggest": {
+                "behat/behat": "Install it if you want to run tests with the provided Behat extension",
+                "phpunit/phpunit": "Install it if you want to run test on /bin/phpunit"
+            },
+            "bin": [
+                "fastest"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Liuggio\\Fastest\\": [
+                        "src",
+                        "adapters"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "liuggio",
+                    "email": "liuggio@gmail.com"
+                }
+            ],
+            "description": "Simple parallel testing execution... with some goodies for functional tests.",
+            "time": "2015-09-23 08:26:01"
+        },
+        {
             "name": "mockery/mockery",
             "version": "0.9.4",
             "source": {
@@ -4409,7 +4467,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "doctrine/doctrine-migrations-bundle": 20,
-        "codeclimate/php-test-reporter": 20
+        "codeclimate/php-test-reporter": 20,
+        "liuggio/fastest": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

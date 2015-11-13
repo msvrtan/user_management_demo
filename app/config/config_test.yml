@@ -3,6 +3,7 @@ imports:
 
 parameters:
     database_name: project_name_test
+    doctrine.dbal.connection_factory.class: Liuggio\Fastest\Doctrine\DBAL\ConnectionFactory
 
 framework:
     test: ~
