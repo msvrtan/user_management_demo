@@ -8,6 +8,7 @@
     <target name="test"
             depends="phpspec,phpunit,behat">
     </target>
+
     <target name="fix-codestandards"
             depends="php-cs-fixer-fix-task,check-codestandards">
     </target>
@@ -56,6 +57,55 @@
         </fail>
     </target>
 
+    <target name="behat-task" description="Run behat tasks in parallel">
+
+        <antcall target="behat-suite-strict">
+            <param name="suite" value="company"/>
+        </antcall>
+        <antcall target="behat-suite-strict">
+            <param name="suite" value="company_admin"/>
+        </antcall>
+        <parallel threadCount="2">
+            <antcall target="behat-suite-strict">
+                <param name="suite" value="user"/>
+            </antcall>
+            <antcall target="behat-suite">
+                <param name="suite" value="wip"/>
+            </antcall>
+        </parallel>
+    </target>
+
+
+    <target name="behat-suite" description="">
+        <exec executable="bin/behat"  failonerror="true">
+            <arg value="-s" />
+            <arg value="${suite}" />
+            <arg value="-f" />
+            <arg value="progress" />
+            <arg value="--colors"/>
+        </exec>
+    </target>
+
+    <target name="behat-suite-strict" description="">
+        <exec executable="bin/behat"  failonerror="true">
+            <arg value="-s" />
+            <arg value="${suite}" />
+            <arg value="-f" />
+            <arg value="progress" />
+            <arg value="--colors"/>
+            <arg value="--strict" />
+        </exec>
+    </target>
+
+    <target name="behat" description="">
+        <exec executable="bin/behat"  failonerror="true">
+            <arg value="-f" />
+            <arg value="progress" />
+            <arg value="--colors"/>
+            <arg value="--strict" />
+            <arg value="--rerun" />
+        </exec>
+    </target>
 
     <target name="php-cs-fixer-fix-task" description="Run php-cs-fixer fix in parallel">
         <parallel threadCount="2">
