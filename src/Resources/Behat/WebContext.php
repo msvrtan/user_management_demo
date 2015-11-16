@@ -1,29 +1,49 @@
 <?php
+namespace Resources\Behat;
 
 use Behat\Behat\Context\SnippetAcceptingContext;
-use Behat\Gherkin\Node\PyStringNode;
-use Behat\Gherkin\Node\TableNode;
 use Behat\MinkExtension\Context\MinkContext;
+use Behat\Symfony2Extension\Context\KernelAwareContext;
 
 /**
  * Behat context class.
  */
-class FeatureContext extends MinkContext implements SnippetAcceptingContext
+class WebContext extends MinkContext implements KernelAwareContext, SnippetAcceptingContext
 {
     private $output;
+    use LoginWebTrait;
+    use ScreenshotTrait;
+    use Symfony2Trait;
 
     /**
-     * Initializes context.
+     * @Transform :property
      *
-     * Every scenario gets its own context object.
-     * You can also pass arbitrary arguments to the context constructor through behat.yml.
+     * @param $propertyName
+     *
+     * @return string
      */
-    public function __construct()
+    public function transformPropertyNameIntoFormPropertyName($propertyName)
     {
+        return 'form_'.lcfirst(str_replace(' ', '', $propertyName));
+    }
+
+    /**
+     * @When I fill :property with :propertyValue
+     *
+     * @param $property
+     * @param $propertyValue
+     */
+    public function iFillWith($property, $propertyValue)
+    {
+        $this->fillField($property, $propertyValue);
     }
 
     /**
      * @Then I should see :text in the output
+     *
+     * @param $text
+     *
+     * @throws \Exception
      */
     public function iShouldSeeInTheOutput($text)
     {
@@ -34,6 +54,8 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext
 
     /**
      * @When I click :text
+     *
+     * @param $text
      */
     public function iClick($text)
     {
@@ -41,20 +63,11 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext
     }
 
     /**
-     * @When I click the plus icon
-     */
-    public function iClickThePlusIcon()
-    {
-        $icon = $this->getSession()->getPage()->find('css', '.icon-plus-sign');
-        if (!$icon) {
-            throw new \Exception('Could not find a plus icon on this page!');
-        }
-
-        $icon->getParent()->click();
-    }
-
-    /**
      * @Then /^I should see "([^"]+)" on page headline$/
+     *
+     * @param $text
+     *
+     * @throws \Exception
      */
     public function iShouldSeeTextOnPageHeadline($text)
     {
@@ -70,6 +83,10 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext
      * Checks, that URL is equal to specified.
      *
      * @Then /^url is "(?P<url>[^"]+)"$/
+     *
+     * @param $url
+     *
+     * @throws \Exception
      */
     public function assertUrl($url)
     {
@@ -87,12 +104,15 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext
      * Attaches file to field with specified xpath.
      *
      * @When /^(?:|I )attach the file "(?P<path>[^"]*)" using xpath to "(?P<field>(?:[^"]|\\")*)"$/
+     *
+     * @param $field
+     * @param $path
      */
     public function iAttachTheFileUsingXpathToInputType($field, $path)
     {
-        $session = $this->getSession();
+        $session  = $this->getSession();
         $selector = $session->getSelectorsHandler()->selectorToXpath('xpath', $field);
-        $element = $session->getPage()->find('xpath', $selector);
+        $element  = $session->getPage()->find('xpath', $selector);
 
         $this->attachFileToField($element->getAttribute('id'), $path);
     }
