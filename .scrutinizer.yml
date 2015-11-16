@@ -13,13 +13,18 @@ build:
         symfony_app:
           web_root: 'web/'
           host: 'www.test.ci'
+  cache:
+    directories:
+      - vendor
+      - bin
   dependencies:
     before:
       - 'cp etc/scrutinizer-ci/app/config/parameters.yml app/config/parameters.yml'
       - 'cp etc/scrutinizer-ci/web/app_test.php web/app_test.php'
       - 'cp etc/scrutinizer-ci/web/.htaccess web/.htaccess'
-      - 'cp etc/scrutinizer-ci/behat.yml behat.yml'
+      - 'cp etc/ci/behat.yml behat.yml'
     after:
+      - php app/console doctrine:database:create --env=dev
       - php app/console doctrine:database:create --env=test
       - 'php app/console doctrine:migrations:migrate --env=test --no-interaction'
       - 'php app/console doctrine:fixtures:load --env=test --no-interaction'

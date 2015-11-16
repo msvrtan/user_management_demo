@@ -8,8 +8,7 @@ default:
     suites:
         web:
             contexts:
-                - FeatureContext
-
+                - Resources\Behat\WebContext
     extensions:
         Behat\MinkExtension:
             base_url: http://test.project_name.loc/
