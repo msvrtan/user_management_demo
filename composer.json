@@ -40,7 +40,8 @@
         "fabpot/php-cs-fixer":                      "~1.5",
         "codeclimate/php-test-reporter":            "dev-master",
         "henrikbjorn/phpspec-code-coverage": "~1.0",
-        "liuggio/fastest": "dev-master"
+        "liuggio/fastest": "dev-master",
+        "coduo/phpspec-data-provider-extension": "^1.0"
     },
     "scripts": {
         "post-install-cmd": [
