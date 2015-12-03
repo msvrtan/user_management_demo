@@ -13,7 +13,7 @@ Vagrant.configure("2") do |config|
     v.name ="project_name"
     v.customize ["modifyvm", :id, "--memory", 2048]
     v.customize ["modifyvm", :id, "--ioapic", "on"]
-    v.customize ["modifyvm", :id, "--cpus", "2"]
+    v.customize ["modifyvm", :id, "--cpus", "8"]
     v.customize ["modifyvm", :id, "--vram", "64"]
     v.customize ["modifyvm", :id, "--cpuexecutioncap", "100"]
     v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
