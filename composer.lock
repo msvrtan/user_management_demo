@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4120eb5cd8eff12add3b454bcaaf99c3",
-    "content-hash": "b3967e4d676844d1108c01059464a2fd",
+    "hash": "b3a55b359283ef05e07f7507d2bad07d",
+    "content-hash": "25b989bf21ca8a9e417e55b0eddac132",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -2361,6 +2361,66 @@
                 "coverage"
             ],
             "time": "2015-10-15 14:41:10"
+        },
+        {
+            "name": "coduo/phpspec-data-provider-extension",
+            "version": "1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/coduo/phpspec-data-provider-extension.git",
+                "reference": "b8d5c8594fec5ab2d7000bc31822a411bcd45146"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/coduo/phpspec-data-provider-extension/zipball/b8d5c8594fec5ab2d7000bc31822a411bcd45146",
+                "reference": "b8d5c8594fec5ab2d7000bc31822a411bcd45146",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0",
+                "phpspec/phpspec": "^2"
+            },
+            "require-dev": {
+                "behat/behat": "3.0.*",
+                "bossa/phpspec2-expect": "^1",
+                "symfony/console": "~2.3.2",
+                "symfony/filesystem": "~2.3",
+                "symfony/process": "~2.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Coduo\\PhpSpec": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Norbert Orzechowicz",
+                    "email": "norbert@orzechowicz.pl"
+                },
+                {
+                    "name": "Michał Dąbrowski",
+                    "email": "dabrowski@brillante.pl"
+                }
+            ],
+            "keywords": [
+                "coduo",
+                "data",
+                "dataprovider",
+                "extension",
+                "phpspec",
+                "provider"
+            ],
+            "time": "2015-10-27 14:27:37"
         },
         {
             "name": "doctrine/data-fixtures",
