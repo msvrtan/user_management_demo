@@ -1,5 +1,6 @@
 {
-    "name": "msvrtan/sf2.starter.kit",
+    "name": "nulldevelopmenthr/sf2-starter-edition",
+    "description": "Symfony 2 starter edition",
     "license": "proprietary",
     "type": "project",
     "autoload": {
