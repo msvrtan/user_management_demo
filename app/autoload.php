@@ -6,7 +6,7 @@ use Doctrine\Common\Annotations\AnnotationRegistry;
 error_reporting(error_reporting() & ~E_USER_DEPRECATED);
 
 /**
- * @var ClassLoader $loader
+ * @var ClassLoader
  */
 $loader = require __DIR__.'/../vendor/autoload.php';
 
