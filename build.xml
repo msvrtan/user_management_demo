@@ -108,7 +108,7 @@
     </target>
 
     <target name="php-cs-fixer-fix-task" description="Run php-cs-fixer fix in parallel">
-        <parallel threadCount="2">
+        <parallel threadCount="4">
             <antcall target="php-cs-fixer-fix">
             	<param name="path" value="src"/>
             </antcall>
@@ -121,7 +121,7 @@
         </parallel>
     </target>
     <target name="php-cs-fixer-check-task" description="Run php-cs-fixer dry-run in parallel">
-        <parallel threadCount="2">
+        <parallel threadCount="4">
             <antcall target="php-cs-fixer-check">
             	<param name="path" value="src"/>
             </antcall>
