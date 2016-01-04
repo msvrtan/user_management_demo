@@ -22,7 +22,6 @@ framework:
     #serializer:      { enable_annotations: true }
     templating:
         engines: ['twig']
-        assets_version: v01
     default_locale:  "%locale%"
     trusted_hosts:   ~
     trusted_proxies: ~
@@ -31,6 +30,9 @@ framework:
         handler_id:  ~
     fragments:       ~
     http_method_override: true
+    assets:
+        version: v01
+
 
 # Twig Configuration
 twig:
@@ -60,6 +62,7 @@ doctrine:
         user:     "%database_user%"
         password: "%database_password%"
         charset:  UTF8
+        server_version: 5.5
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
         #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
@@ -69,6 +72,7 @@ doctrine:
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
+        naming_strategy: doctrine.orm.naming_strategy.default
         auto_mapping: true
 
 # Swiftmailer Configuration
