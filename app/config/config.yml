@@ -22,7 +22,6 @@ framework:
     #serializer:      { enable_annotations: true }
     templating:
         engines: ['twig']
-        assets_version: v01
     default_locale:  "%locale%"
     trusted_hosts:   ~
     trusted_proxies: ~
@@ -31,6 +30,9 @@ framework:
         handler_id:  ~
     fragments:       ~
     http_method_override: true
+    assets:
+        version: v01
+
 
 # Twig Configuration
 twig:
