@@ -116,7 +116,10 @@
             	<param name="path" value="spec"/>
             </antcall>
             <antcall target="php-cs-fixer-fix">
-            	<param name="path" value="app"/>
+                <param name="path" value="app"/>
+            </antcall>
+            <antcall target="php-cs-fixer-fix">
+                <param name="path" value="tests"/>
             </antcall>
         </parallel>
     </target>
@@ -129,7 +132,10 @@
             	<param name="path" value="spec"/>
             </antcall>
             <antcall target="php-cs-fixer-check">
-            	<param name="path" value="app"/>
+                <param name="path" value="app"/>
+            </antcall>
+            <antcall target="php-cs-fixer-check">
+                <param name="path" value="tests"/>
             </antcall>
         </parallel>
     </target>
@@ -139,7 +145,10 @@
             	<param name="path" value="src"/>
             </antcall>
             <antcall target="phpmd">
-            	<param name="path" value="app"/>
+                <param name="path" value="app"/>
+            </antcall>
+            <antcall target="phpmd">
+                <param name="path" value="tests"/>
             </antcall>
         </parallel>
     </target>
@@ -149,7 +158,10 @@
             	<param name="path" value="src"/>
             </antcall>
             <antcall target="phpcs">
-            	<param name="path" value="app"/>
+                <param name="path" value="app"/>
+            </antcall>
+            <antcall target="phpcs">
+                <param name="path" value="tests"/>
             </antcall>
         </parallel>
     </target>
