@@ -1,35 +1,22 @@
 language: php
 addons:
-  hosts:
-  - www.test.ci
   apt:
     packages:
-      - apache2
-      - xvfb  
+      - xvfb
+
+sudo: false
+
 php:
   - 5.5
   - 5.6
+  - 7.0
+
 cache:
   directories:
     - vendor
     - bin
-before_script:
-  - sudo apt-get update
-  - sudo apt-get install apache2 libapache2-mod-fastcgi
-   # enable php-fpm
-  - sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
-  - sudo a2enmod rewrite actions fastcgi alias
-  - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-  - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
-   # configure apache virtual hosts
-  - sudo cp -f etc/travis-ci/www.test.ci /etc/apache2/sites-available/default
-  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/default
-  - sudo mkdir /etc/ssl/crt/
-  - sudo cp etc/provisioning/roles/nginx/files/ssl/server.crt /etc/ssl/crt/server.crt
-  - sudo cp etc/provisioning/roles/nginx/files/ssl/server.key /etc/ssl/crt/server.key
-#  - sudo a2enmod ssl
-  - sudo service apache2 restart
 
+before_script:
   - sh -e /etc/init.d/xvfb start
   - export DISPLAY=:99.0
   - sleep 4
@@ -40,26 +27,30 @@ before_script:
 
   - cp etc/travis-ci/app/config/parameters.yml app/config/parameters.yml
   - cp etc/travis-ci/web/app_test.php web/app_test.php
-  - cp etc/travis-ci/web/.htaccess web/.htaccess
-  - cp etc/ci/behat.yml behat.yml
+  - sed -i 's/test.project_name.loc/localhost:8000/' behat.yml
 
-  - composer install
-  - php app/console doctrine:database:create --env=dev
-  - php app/console doctrine:database:create --env=test
+  - php app/console server:start --env=test &
+
+  - sed -i 's/^/;/' ~/.phpenv/versions/$(phpenv global)/etc/conf.d/xdebug.ini
+  - composer install --prefer-source
+
+  - php app/console doctrine:database:create --env=dev --if-not-exists
+  - php app/console doctrine:database:create --env=test --if-not-exists
   - php app/console doctrine:migrations:migrate --env=test --no-interaction
   - php app/console doctrine:fixtures:load --env=test --no-interaction
   - php app/console assetic:dump --env=prod --no-debug
 
 script:
-  - sed -i 's/^;//' ~/.phpenv/versions/$(phpenv global)/etc/conf.d/xdebug.ini
-  - ./bin/phpunit
-  - sed -i 's/^/;/' ~/.phpenv/versions/$(phpenv global)/etc/conf.d/xdebug.ini
+  - php bin/phpunit
   - ./bin/behat
   - ./bin/phpspec run --no-interaction
   - ./bin/phpmd src/ text phpmd.xml
   - ./bin/phpmd app/ text phpmd.xml
+  - ./bin/phpmd tests/ text phpmd.xml
   - ./bin/phpcs --standard=phpcs.xml src/ -n
   - ./bin/phpcs --standard=phpcs.xml app/ -n
+  - ./bin/phpcs --standard=phpcs.xml tests/ -n
   - ./bin/php-cs-fixer fix spec/ --dry-run --diff --level=symfony --fixers=short_array_syntax,align_double_arrow,align_equals,no_blank_lines_before_namespace,ordered_use,phpdoc_order,-unused_use,-empty_return
   - ./bin/php-cs-fixer fix src/ --dry-run --diff --level=symfony --fixers=short_array_syntax,align_double_arrow,align_equals,no_blank_lines_before_namespace,ordered_use,phpdoc_order,-unused_use,-empty_return
-#  - ./bin/coveralls
+  - ./bin/php-cs-fixer fix tests/ --dry-run --diff --level=symfony --fixers=short_array_syntax,align_double_arrow,align_equals,no_blank_lines_before_namespace,ordered_use,phpdoc_order,-unused_use,-empty_return
+  #- ./bin/coveralls
