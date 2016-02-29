@@ -1,7 +1,10 @@
 <?php
+
 namespace Resources\Behat;
 
 use Behat\Behat\Context\SnippetAcceptingContext;
+use Behat\Mink\Exception\ElementNotFoundException;
+use Behat\Mink\Exception\ExpectationException;
 use Behat\MinkExtension\Context\MinkContext;
 use Behat\Symfony2Extension\Context\KernelAwareContext;
 
@@ -10,7 +13,7 @@ use Behat\Symfony2Extension\Context\KernelAwareContext;
  */
 class WebContext extends MinkContext implements KernelAwareContext, SnippetAcceptingContext
 {
-    private $output;
+    protected $output;
     use LoginWebTrait;
     use ScreenshotTrait;
     use Symfony2Trait;
@@ -115,5 +118,43 @@ class WebContext extends MinkContext implements KernelAwareContext, SnippetAccep
         $element  = $session->getPage()->find('xpath', $selector);
 
         $this->attachFileToField($element->getAttribute('id'), $path);
+    }
+
+    /**
+     * Checks, that option from select with specified id|name|label|value is selected.
+     *
+     * @Then /^the "(?P<option>(?:[^"]|\\")*)" option from "(?P<select>(?:[^"]|\\")*)" (?:is|should be) selected/
+     * @Then /^the option "(?P<option>(?:[^"]|\\")*)" from "(?P<select>(?:[^"]|\\")*)" (?:is|should be) selected$/
+     * @Then /^"(?P<option>(?:[^"]|\\")*)" from "(?P<select>(?:[^"]|\\")*)" (?:is|should be) selected$/
+     *
+     * @param $option
+     * @param $select
+     *
+     * @throws ElementNotFoundException
+     * @throws ExpectationException
+     */
+    public function theOptionFromShouldBeSelected($select, $option)
+    {
+        $selectField = $this->getSession()->getPage()->findField($select);
+        if (null === $selectField) {
+            throw new ElementNotFoundException($this->getSession(), 'select field', 'id|name|label|value', $select);
+        }
+        $optionField = $selectField->find('named', ['option', "{$option}"]);
+
+        if (null === $optionField) {
+            throw new ElementNotFoundException(
+                $this->getSession(),
+                'select option field',
+                'id|name|label|value',
+                $option
+            );
+        }
+
+        if (!$optionField->isSelected()) {
+            throw new ExpectationException(
+                'Select option field with value|text "'.$option.'" is not selected in the select "'.$select.'"',
+                $this->getSession()
+            );
+        }
     }
 }
