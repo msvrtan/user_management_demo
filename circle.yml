@@ -13,6 +13,7 @@ dependencies:
   pre:
     - sudo apt-get update
     - sudo apt-get install nginx
+    - yes '' | pecl install -f apcu-4.0.10
 
     - sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
     - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
@@ -28,7 +29,7 @@ dependencies:
     - cp etc/ci/web/app_test.php web/app_test.php
     #- cp etc/ci/behat.yml behat.yml
     - sed -i 's/test.project_name.loc/www.test.ci/' behat.yml
-    - cp etc/ci/phpspec.yml phpspec.yml
+    #- cp etc/ci/phpspec.yml phpspec.yml
   post:
     - sudo setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx  app/cache app/logs
     - sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
@@ -46,10 +47,14 @@ dependencies:
     - "bin"
 test:
   override:
-    - sed -i 's/^;//' ~/.phpenv/versions/$(phpenv global)/etc/conf.d/xdebug.ini
-    - ./bin/phpunit
+    #- sed -i 's/^;//' ~/.phpenv/versions/$(phpenv global)/etc/conf.d/xdebug.ini
+    - php -d 'xdebug.max_nesting_level=500' bin/phpunit --exclude-group GitHubMutable
+    #- sed -i 's/^/;/' ~/.phpenv/versions/$(phpenv global)/etc/conf.d/xdebug.ini
+    #- ./bin/coveralls
+    #- sed -i 's/^;//' ~/.phpenv/versions/$(phpenv global)/etc/conf.d/xdebug.ini
     - ./bin/phpspec run --no-interaction
-    - sed -i 's/^/;/' ~/.phpenv/versions/$(phpenv global)/etc/conf.d/xdebug.ini
+    #- sed -i 's/^/;/' ~/.phpenv/versions/$(phpenv global)/etc/conf.d/xdebug.ini
+    #- ./bin/coveralls
     - ./bin/behat --strict
     - ./bin/phpmd src/ text phpmd.xml
     - ./bin/phpmd app/ text phpmd.xml
@@ -60,5 +65,4 @@ test:
     - ./bin/php-cs-fixer fix spec/ --dry-run --diff --level=symfony --fixers=short_array_syntax,align_double_arrow,align_equals,no_blank_lines_before_namespace,ordered_use,phpdoc_order,-unused_use,-empty_return
     - ./bin/php-cs-fixer fix src/ --dry-run --diff --level=symfony --fixers=short_array_syntax,align_double_arrow,align_equals,no_blank_lines_before_namespace,ordered_use,phpdoc_order,-unused_use,-empty_return
     - ./bin/php-cs-fixer fix tests/ --dry-run --diff --level=symfony --fixers=short_array_syntax,align_double_arrow,align_equals,no_blank_lines_before_namespace,ordered_use,phpdoc_order,-unused_use,-empty_return
-    - ./bin/coveralls
-    - ./bin/test-reporter
+    #- ./bin/test-reporter
