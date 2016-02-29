@@ -38,8 +38,8 @@ dependencies:
     - php app/console doctrine:migrations:migrate --env=test --no-interaction
     - php app/console doctrine:fixtures:load --env=test --no-interaction
     - php app/console assetic:dump --env=prod --no-debug    
-    - wget http://selenium-release.storage.googleapis.com/2.46/selenium-server-standalone-2.46.0.jar
-    - java -jar selenium-server-standalone-2.46.0.jar:
+    - wget http://selenium-release.storage.googleapis.com/2.50/selenium-server-standalone-2.50.1.jar
+    - java -jar selenium-server-standalone-2.50.1.jar:
         background: true
   cache_directories:
     - "vendor"

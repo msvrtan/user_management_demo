@@ -31,9 +31,9 @@ build:
       - 'php app/console assetic:dump --env=prod --no-debug'
   project_setup:
     before:
-      - wget http://selenium-release.storage.googleapis.com/2.46/selenium-server-standalone-2.46.0.jar
+      - wget http://selenium-release.storage.googleapis.com/2.50/selenium-server-standalone-2.50.1.jar
       -
-        command: java -jar selenium-server-standalone-2.46.0.jar
+        command: java -jar selenium-server-standalone-2.50.1.jar
         background: true
 checks:
     php:
