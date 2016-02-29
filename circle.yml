@@ -3,6 +3,8 @@ machine:
     version: 5.6.5
   hosts:
     www.test.ci: 127.0.0.1
+  environment:
+    COMPOSER_DISCARD_CHANGES: true
 general:
   artifacts:
     - "build/"
