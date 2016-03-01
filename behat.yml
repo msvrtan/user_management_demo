@@ -6,12 +6,24 @@ default:
             snippets: false
 
     suites:
+        user_management_api:
+            contexts:
+                - AppBundle\Behat\SecurityContext
+            filters:
+                tags: "@user_management && @api"
+        security:
+            contexts:
+                - AppBundle\Behat\SecurityContext
+            filters:
+                tags: "@security"
         web:
             contexts:
                 - Resources\Behat\WebContext
+            filters:
+                tags: "~@security && ~@user_management && ~@api"
     extensions:
         Behat\MinkExtension:
-            base_url: http://test.user_management_demo.loc/
+            base_url: https://test.user_management_demo.loc/
             sessions:
                 default:
                     symfony2: ~
