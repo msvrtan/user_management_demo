@@ -6,7 +6,7 @@ Vagrant.configure("2") do |config|
   config.vm.box = "trusty64-phpdev-20151011"
   config.vm.box_url = "http://dwnl.nulldevelopment.hr/boxes/trusty64-phpdev-20150825.box"
 
-  config.vm.network "private_network", ip: "10.0.1.80"
+  config.vm.network "private_network", ip: "10.0.101.82"
   config.vm.synced_folder ".", "/vagrant", type: "nfs"
 
   config.vm.provider "virtualbox" do |v|
