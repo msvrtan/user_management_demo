@@ -27,7 +27,6 @@ class UserManagementApiContext extends SecurityContext
             $this->response = $client->post($url, $data);
         } catch (\Exception $e) {
             $this->response = $e->getResponse();
-            var_dump($e);
         }
     }
 
