@@ -12,3 +12,5 @@ parameters:
     mailer_password:   ~
     locale:            en
     secret:            ThisTokenIsNotSoSecretChangeIt
+    test_base_uri:     http://www.test.ci/
+

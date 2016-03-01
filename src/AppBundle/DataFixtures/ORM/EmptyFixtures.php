@@ -6,6 +6,9 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
+/**
+ * Class EmptyFixtures.
+ */
 class EmptyFixtures extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
