@@ -3,15 +3,17 @@
 namespace Company\UserBundle\Behat;
 
 use AppBundle\Behat\SecurityContext;
-use Company\UserBundle\Repository\SimpleUserRepository;
-use GuzzleHttp\Client;
-use Resources\Behat\DomainContext;
 
+/**
+ * Class UserManagementApiContext.
+ */
 class UserManagementApiContext extends SecurityContext
 {
     /**
      * @Given there is a user with name :name
      * @When  I create user with name :name
+     *
+     * @param $name
      */
     public function iCreateUserWithName($name)
     {
@@ -33,6 +35,8 @@ class UserManagementApiContext extends SecurityContext
 
     /**
      * @When I delete user with id :id
+     *
+     * @param $id
      */
     public function iDeleteUserWithId($id)
     {
@@ -52,6 +56,8 @@ class UserManagementApiContext extends SecurityContext
 
     /**
      * @Then there should be user with name :name
+     *
+     * @param $name
      */
     public function thereShouldBeUserWithName($name)
     {

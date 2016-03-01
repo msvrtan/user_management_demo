@@ -6,6 +6,9 @@ use Company\UserBundle\Entity\SimpleUser;
 use Company\UserBundle\Repository\SimpleUserRepository;
 use Doctrine\ORM\EntityManager;
 
+/**
+ * Class SimpleUserFacade.
+ */
 class SimpleUserFacade
 {
     private $repository;
@@ -14,7 +17,8 @@ class SimpleUserFacade
     /**
      * UserManagementApiContext constructor.
      *
-     * @param $repository
+     * @param SimpleUserRepository $repository
+     * @param EntityManager        $em
      */
     public function __construct(SimpleUserRepository $repository, EntityManager $em)
     {
@@ -37,6 +41,11 @@ class SimpleUserFacade
         return $user;
     }
 
+    /**
+     * @param $id
+     *
+     * @return bool
+     */
     public function deleteUser($id)
     {
         $user = $this->repository->find($id);
