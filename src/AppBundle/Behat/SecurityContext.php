@@ -10,8 +10,8 @@ use Resources\Behat\DomainContext;
  */
 class SecurityContext extends DomainContext
 {
-    private $token;
-    private $response;
+    protected $token;
+    protected $response;
 
     /**
      * @Given I am admin user
@@ -80,7 +80,7 @@ class SecurityContext extends DomainContext
     /**
      * @return Client
      */
-    private function getClient()
+    protected function getClient()
     {
         $baseUri = $this->getContainer()->getParameter('test_base_uri');
 

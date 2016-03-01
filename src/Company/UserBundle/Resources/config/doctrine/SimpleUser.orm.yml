@@ -1,0 +1,15 @@
+Company\UserBundle\Entity\SimpleUser:
+  type: entity
+  table: SimpleUsers
+  repositoryClass: Company\UserBundle\Repository\SimpleUserRepository
+  id:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+  fields:
+    name:
+      type: string
+      length: 255
+  lifecycleCallbacks: {  }
