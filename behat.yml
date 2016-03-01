@@ -6,9 +6,14 @@ default:
             snippets: false
 
     suites:
+        user_management:
+            contexts:
+                - Company\UserBundle\Behat\UserManagementDomainContext
+            filters:
+                tags: "@user_management"
         user_management_api:
             contexts:
-                - AppBundle\Behat\SecurityContext
+                - Company\UserBundle\Behat\UserManagementApiContext
             filters:
                 tags: "@user_management && @api"
         security:

@@ -1,3 +1,8 @@
-company_user_homepage:
+admin_test_page:
     path:     /admin/foo
     defaults: { _controller: CompanyUserBundle:Default:index }
+
+admin_api_user_create:
+    path:     /admin/api/v1/user/create
+    defaults: { _controller: CompanyUserBundle:User:create }
+    methods: [GET,POST]
