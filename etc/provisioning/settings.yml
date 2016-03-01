@@ -24,7 +24,7 @@ parameters:
     - name: user_management_demo_dev
     - name: user_management_demo_test
   database_users:
-    - username: user_management_demo
+    - username: user_demo
       password: n0p455
       db_name: user_management_demo_%
   git:
