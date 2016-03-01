@@ -1,0 +1,20 @@
+Company\UserBundle\Entity\SimpleGroup:
+  type: entity
+  table: SimpleGroups
+  repositoryClass: Company\UserBundle\Repository\SimpleGroupRepository
+  id:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+  fields:
+    groupName:
+      type: string
+      length: 255
+      unique: true
+  manyToMany:
+    users:
+      targetEntity: Company\UserBundle\Entity\SimpleUser
+      mappedBy: groups
+  lifecycleCallbacks: {  }

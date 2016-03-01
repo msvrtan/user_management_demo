@@ -2,20 +2,20 @@
 
 namespace Company\UserBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * SimpleUser.
  */
 class SimpleUser implements \JsonSerializable
 {
-    /**
-     * @var int
-     */
+    /** @var int */
     private $id;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $name;
+
+    private $groups;
 
     /**
      * SimpleUser constructor.
@@ -24,7 +24,8 @@ class SimpleUser implements \JsonSerializable
      */
     public function __construct($name)
     {
-        $this->name = $name;
+        $this->name   = $name;
+        $this->groups = new ArrayCollection();
     }
 
     /**
@@ -45,6 +46,36 @@ class SimpleUser implements \JsonSerializable
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @param SimpleGroup $simpleGroup
+     *
+     * @return $this
+     */
+    public function addToGroup(SimpleGroup $simpleGroup)
+    {
+        $this->groups[] = $simpleGroup;
+
+        return $this;
+    }
+
+    /**
+     * @param SimpleGroup $simpleGroup
+     *
+     * @return bool
+     */
+    public function removeFromGroup(SimpleGroup $simpleGroup)
+    {
+        foreach ($this->groups as $key => $existingGroup) {
+            if ($existingGroup->getId() === $simpleGroup->getId()) {
+                unset($this->groups[$key]);
+
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
