@@ -47,6 +47,9 @@ class SimpleUser implements \JsonSerializable
         return $this->name;
     }
 
+    /**
+     * @return array
+     */
     public function jsonSerialize()
     {
         return [

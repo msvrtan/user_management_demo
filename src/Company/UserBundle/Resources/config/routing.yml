@@ -5,4 +5,9 @@ admin_test_page:
 admin_api_user_create:
     path:     /admin/api/v1/user/create
     defaults: { _controller: CompanyUserBundle:User:create }
-    methods: [GET,POST]
+    methods: [POST]
+
+admin_api_user_delete:
+    path:     /admin/api/v1/user/{id}
+    defaults: { _controller: CompanyUserBundle:User:delete }
+    methods: [DELETE]

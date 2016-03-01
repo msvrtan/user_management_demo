@@ -1,5 +1,5 @@
 @user_management @api
-Feature: Creating used
+Feature: Creating user
   In order to have users
   As admin
   I need to create users
