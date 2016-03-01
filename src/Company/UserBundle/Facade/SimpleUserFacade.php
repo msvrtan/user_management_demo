@@ -36,4 +36,18 @@ class SimpleUserFacade
 
         return $user;
     }
+
+    public function deleteUser($id)
+    {
+        $user = $this->repository->find($id);
+
+        if (!$user) {
+            return false;
+        }
+
+        $this->em->remove($user);
+        $this->em->flush();
+
+        return true;
+    }
 }

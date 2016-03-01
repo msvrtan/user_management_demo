@@ -24,4 +24,15 @@ class UserController extends Controller
 
         return new JsonResponse($user);
     }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function deleteAction($id)
+    {
+        $service = $this->get('company_user.facade.simple_user');
+        $result  = $service->deleteUser($id);
+
+        return new JsonResponse($result);
+    }
 }
