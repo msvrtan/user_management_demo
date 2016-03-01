@@ -5,6 +5,9 @@ namespace AppBundle\Behat;
 use GuzzleHttp\Client;
 use Resources\Behat\DomainContext;
 
+/**
+ * Class SecurityContext.
+ */
 class SecurityContext extends DomainContext
 {
     private $token;
@@ -36,6 +39,8 @@ class SecurityContext extends DomainContext
 
     /**
      * @When I access :url
+     *
+     * @param $url
      */
     public function iAccess($url)
     {
@@ -54,6 +59,8 @@ class SecurityContext extends DomainContext
 
     /**
      * @Then response body should contain :message
+     *
+     * @param $message
      */
     public function responseBodyShouldContain($message)
     {
@@ -62,12 +69,17 @@ class SecurityContext extends DomainContext
 
     /**
      * @Then the response status code should be :code
+     *
+     * @param $code
      */
     public function theResponseStatusCodeShouldBe($code)
     {
         \PHPUnit_Framework_Assert::assertSame((string) $code, (string) $this->response->getStatusCode());
     }
 
+    /**
+     * @return Client
+     */
     private function getClient()
     {
         $baseUri = $this->getContainer()->getParameter('test_base_uri');

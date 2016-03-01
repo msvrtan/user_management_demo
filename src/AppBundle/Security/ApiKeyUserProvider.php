@@ -2,7 +2,6 @@
 
 namespace AppBundle\Security;
 
-use Symfony\Component\Security\Core\Exception\AuthenticationCredentialsNotFoundException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\User;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -33,6 +32,8 @@ class ApiKeyUserProvider implements UserProviderInterface
 
     /**
      * @param string $username
+     *
+     * @throws \Exception
      *
      * @return User
      */
