@@ -11,7 +11,7 @@ default:
                 - Resources\Behat\WebContext
     extensions:
         Behat\MinkExtension:
-            base_url: http://test.project_name.loc/
+            base_url: http://test.user_management_demo.loc/
             sessions:
                 default:
                     symfony2: ~

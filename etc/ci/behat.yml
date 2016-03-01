@@ -19,5 +19,5 @@ default:
                     selenium2: ~
             browser_name: firefox
             show_auto:    false
-            files_path:   /home/ubuntu/project_name/
+            files_path:   /home/ubuntu/user_management_demo/
         Behat\Symfony2Extension: ~

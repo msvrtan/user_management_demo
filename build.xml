@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="project_name" default="build">
+<project name="user_management_demo" default="build">
 <property
     name="my.project.tmp.exec.output"
     value="${tmp.dir}/exec-output.txt"/>

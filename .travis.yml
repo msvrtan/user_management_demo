@@ -35,7 +35,7 @@ before_script:
   - cp etc/travis-ci/app/config/parameters.yml app/config/parameters.yml
   - cp etc/travis-ci/web/app_test.php web/app_test.php
   - if [[ $coverage == 'phpspec' ]]; then cp etc/ci/phpspec.yml phpspec.yml; fi;
-  - sed -i 's/test.project_name.loc/localhost:8000/' behat.yml
+  - sed -i 's/test.user_management_demo.loc/localhost:8000/' behat.yml
 
   - sed -i 's/^/;/' ~/.phpenv/versions/$(phpenv global)/etc/conf.d/xdebug.ini
   - composer install --prefer-source

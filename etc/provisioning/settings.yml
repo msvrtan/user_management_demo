@@ -9,24 +9,24 @@ parameters:
   apache:
     port: 81
   applications:
-    - name:       project_name
+    - name:       user_management_demo
       template:   symfony2-dev-application
-      domain:     www.project_name.loc
-      path:       /var/www/sites/www.project_name.loc
-    - name:       test_project_name
+      domain:     www.user_management_demo.loc
+      path:       /var/www/sites/www.user_management_demo.loc
+    - name:       test_user_management_demo
       template:   symfony2-test-application
-      domain:     test.project_name.loc
-      path:       /var/www/sites/www.project_name.loc
+      domain:     test.user_management_demo.loc
+      path:       /var/www/sites/www.user_management_demo.loc
   mysql:
     ip: 127.0.0.1
     root_password: n0p455
   databases:
-    - name: project_name_dev
-    - name: project_name_test
+    - name: user_management_demo_dev
+    - name: user_management_demo_test
   database_users:
-    - username: project_name
+    - username: user_management_demo
       password: n0p455
-      db_name: project_name_%
+      db_name: user_management_demo_%
   git:
     rate_limit_token:   ADD-YOUR-OWN
   selenium:

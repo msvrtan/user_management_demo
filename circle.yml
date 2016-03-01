@@ -28,7 +28,7 @@ dependencies:
     - cp etc/ci/app/config/parameters.yml app/config/parameters.yml
     - cp etc/ci/web/app_test.php web/app_test.php
     #- cp etc/ci/behat.yml behat.yml
-    - sed -i 's/test.project_name.loc/www.test.ci/' behat.yml
+    - sed -i 's/test.user_management_demo.loc/www.test.ci/' behat.yml
     #- cp etc/ci/phpspec.yml phpspec.yml
   post:
     - sudo setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx  app/cache app/logs
