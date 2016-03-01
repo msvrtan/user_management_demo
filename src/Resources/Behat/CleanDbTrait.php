@@ -23,7 +23,7 @@ trait CleanDbTrait
     protected function cleanDb()
     {
         $em            = $this->getEntityManager();
-        $orderedTables = ['SimpleUsers'];
+        $orderedTables = ['SimpleUsers', 'SimpleGroups', 'SimpleGroupUsers'];
 
         $em->getConnection()->executeUpdate('SET foreign_key_checks = 0;');
         $platform = $em->getConnection()->getDatabasePlatform();

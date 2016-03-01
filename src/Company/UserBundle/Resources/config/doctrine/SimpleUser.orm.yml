@@ -12,4 +12,10 @@ Company\UserBundle\Entity\SimpleUser:
     name:
       type: string
       length: 255
+  manyToMany:
+    groups:
+      targetEntity: Company\UserBundle\Entity\SimpleGroup
+      inversedBy: users
+      joinTable:
+        name: SimpleGroupUsers
   lifecycleCallbacks: {  }

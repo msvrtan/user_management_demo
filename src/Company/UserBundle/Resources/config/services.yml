@@ -7,3 +7,13 @@ services:
     factory: ["@doctrine.orm.default_entity_manager", getRepository]
     arguments:
       - Company\UserBundle\Entity\SimpleUser
+
+  company_user.facade.simple_group:
+    class: Company\UserBundle\Facade\SimpleGroupFacade
+    arguments: ["@company_user.repository.simple_group","@doctrine.orm.default_entity_manager"]
+
+  company_user.repository.simple_group:
+    class: Doctrine\ORM\EntityRepository
+    factory: ["@doctrine.orm.default_entity_manager", getRepository]
+    arguments:
+      - Company\UserBundle\Entity\SimpleGroup

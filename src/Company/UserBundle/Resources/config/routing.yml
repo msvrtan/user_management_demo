@@ -11,3 +11,23 @@ admin_api_user_delete:
     path:     /admin/api/v1/user/{id}
     defaults: { _controller: CompanyUserBundle:User:delete }
     methods: [DELETE]
+
+admin_api_group_create:
+    path:     /admin/api/v1/group/create
+    defaults: { _controller: CompanyUserBundle:Group:create }
+    methods: [POST]
+
+admin_api_group_delete:
+    path:     /admin/api/v1/group/{id}
+    defaults: { _controller: CompanyUserBundle:Group:delete }
+    methods: [DELETE]
+
+admin_api_group_add_user:
+    path:     /admin/api/v1/group/{id}/add-user/{userId}
+    defaults: { _controller: CompanyUserBundle:Group:addUser }
+    methods: [POST]
+
+admin_api_group_remove_user:
+    path:     /admin/api/v1/group/{id}/remove-user/{userId}
+    defaults: { _controller: CompanyUserBundle:Group:removeUser }
+    methods: [POST]
